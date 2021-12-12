@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Category {
-  Tag_id          Int         @id @default(autoincrement())
+  Tag_id          String      @id @default(uuid())
   Tag_description String
   Processor       Processor[]
   Graphics        Graphics[]
@@ -20,54 +20,54 @@ model Category {
 }
 
 model Processor {
-  id    Int      @id @default(autoincrement())
-  name  String   @unique
+  id    String   @id @default(uuid())
+  name  String
   cost  Float    @db.Float
   Tags  Category @relation(fields: [tagId], references: [Tag_id])
-  tagId Int      @unique
+  tagId String
 }
 
 model Graphics {
-  id     Int      @id @default(autoincrement())
+  id     String   @id @default(uuid())
   name   String   @unique
   cost   Float    @db.Float
-  tagsId Int      @unique
+  tagsId String
   cat    Category @relation(fields: [tagsId], references: [Tag_id])
 }
 
 model RAM {
-  id     Int      @id @default(autoincrement())
+  id     String   @id @default(uuid())
   name   String   @unique
   cost   Float    @db.Float
-  tagsId Int      @unique
+  tagsId String
   Tags   Category @relation(fields: [tagsId], references: [Tag_id])
 }
 
 model Storage {
-  id     Int      @id @default(autoincrement())
+  id     String   @id @default(uuid())
   name   String   @unique
   cost   Float    @db.Float
-  tagsId Int      @unique
+  tagsId String
   Tag_id Category @relation(fields: [tagsId], references: [Tag_id])
 }
 
 model Users {
   id            Int      @id @default(autoincrement())
-  email         String   @unique
+  email         String
   firstname     String
   lastname      String
   streetaddress String
   state         String
   zipcode       Int
-  cellphone     String?  @unique
-  password      String   @unique
+  cellphone     String?
+  password      String
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   Cart          Cart[]
 }
 
 model Cart {
-  Cart_id     Int    @id @default(autoincrement())
+  Cart_id     String @id @default(uuid())
   OrderNumber String @unique
   UserId      Int
   user        Users  @relation(fields: [UserId], references: [id])

@@ -16,7 +16,7 @@ type Tag {
   Tag_description: String!
 }
 
-type GPU {
+type Graphics {
   id: ID!
   name: String!
   cost: Float!
@@ -27,14 +27,14 @@ type Processor {
   id: String!
   name: String!
   cost: Float!
-  Category_name: [Category]!
+  Tags: [Category]!
 }
 
 type RAM {
   id: UUID!
   name: String!
   cost: Float!
-  Category_name: [Category]!
+  Tags: [Category]!
 }
 
 
@@ -42,7 +42,7 @@ type Storage {
   id: UUID!
   name: String!
   cost: Float!
-  Category_name: [Category]!
+  Tags: [Category]!
 }
 
 type Selection {
