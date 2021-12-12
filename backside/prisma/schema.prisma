@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  Tag_id          Int         @id @default(autoincrement())
+  Tag_description String
+  Processor       Processor[]
+  Graphics        Graphics[]
+  RAM             RAM[]
+  Storage         Storage[]
+}
+
+model Processor {
+  id    Int      @id @default(autoincrement())
+  name  String   @unique
+  cost  Float    @db.Float
+  Tags  Category @relation(fields: [tagId], references: [Tag_id])
+  tagId Int      @unique
+}
+
+model Graphics {
+  id     Int      @id @default(autoincrement())
+  name   String   @unique
+  cost   Float    @db.Float
+  tagsId Int      @unique
+  cat    Category @relation(fields: [tagsId], references: [Tag_id])
+}
+
+model RAM {
+  id     Int      @id @default(autoincrement())
+  name   String   @unique
+  cost   Float    @db.Float
+  tagsId Int      @unique
+  Tags   Category @relation(fields: [tagsId], references: [Tag_id])
+}
+
+model Storage {
+  id     Int      @id @default(autoincrement())
+  name   String   @unique
+  cost   Float    @db.Float
+  tagsId Int      @unique
+  Tag_id Category @relation(fields: [tagsId], references: [Tag_id])
+}
+
+model Users {
+  id            Int      @id @default(autoincrement())
+  email         String   @unique
+  firstname     String
+  lastname      String
+  streetaddress String
+  state         String
+  zipcode       Int
+  cellphone     String?  @unique
+  password      String   @unique
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  Cart          Cart[]
+}
+
+model Cart {
+  Cart_id     Int    @id @default(autoincrement())
+  OrderNumber String @unique
+  UserId      Int
+  user        Users  @relation(fields: [UserId], references: [id])
+}
